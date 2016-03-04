@@ -80,8 +80,8 @@ class inputs():
         try:
             self.effcutoff = float(clinputs[2])
         except:
-            self.effcutoff = 140.0
+            self.effcutoff = 120.0
         try:
             self.mintotratio = float(clinputs[3])
         except:
-            self.mintotratio = 1.4
+            self.mintotratio = 1.2
