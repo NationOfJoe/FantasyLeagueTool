@@ -64,3 +64,24 @@ def get_league_table():
             clubtoadd.calculate_ratio()
             league_table.append(clubtoadd)
     return league_table
+
+
+class inputs():
+    def __init__(self):
+        self.iterations = ''
+        self.effcutoff = ''
+        self.mintotratio = ''
+
+    def calc_inputs(self, clinputs):
+        try:
+            self.iterations = int(clinputs[1])
+        except:
+            self.iterations = 2000
+        try:
+            self.effcutoff = float(clinputs[2])
+        except:
+            self.effcutoff = 140.0
+        try:
+            self.mintotratio = float(clinputs[3])
+        except:
+            self.mintotratio = 1.4

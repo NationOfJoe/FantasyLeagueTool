@@ -49,10 +49,8 @@ def safeprint(s):
         else:
             print(s.encode('utf8'))
 
-try:
-    iterations = int(sys.argv[1])
-except:
-    iterations = 2000
+inp = getPlayervalue.inputs()
+inp.calc_inputs(sys.argv)
 teams = []
 secondforward = ''
 secondCenter = ''
@@ -80,7 +78,7 @@ for inplayer in players:
         centers.append(inplayer)
     if inplayer.pos == 'פורוורד' :
         forwards.append(inplayer)
-for _ in itertools.repeat(None, iterations):
+for _ in itertools.repeat(None, inp.iterations):
     x = team()
     while firstCenter == secondCenter:
         firstCenter = random.choice(centers)
@@ -110,7 +108,7 @@ for _ in itertools.repeat(None, iterations):
     secondguard = ''
     thirdguard = ''
     thirdforward = ''
-    if x.totalPrice <= 470 and x.totalratio > 1.3 and x.effeff > 130:
+    if x.totalPrice <= 470 and x.totalratio > inp.mintotratio and x.effeff > inp.effcutoff:
         dup = x.checktwoplayersperteam()
         if dup == 'OK':
             teams.append(x)
