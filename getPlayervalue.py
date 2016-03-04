@@ -17,6 +17,17 @@ class player:
             if someclub.name == self.leagueteam:
                 self.teamratio = someclub.ratio * 5
 
+class club():
+    def __init__(self, name, wins, losses):
+        self.name = name
+        self.wins = wins
+        self.losses = losses
+        self.ratio = ''
+
+    def calculate_ratio(self):
+        self.ratio = int(self.wins) / (int(self.losses) + int(self.wins))
+        float(self.ratio)
+
 
 def fill_player_list():
     players = []
@@ -36,3 +47,20 @@ def fill_player_list():
             ratio = (float(eff)/float(price))
             players.append(player(name, eff, price, pos, ratio, team))
     return players
+
+def get_league_table():
+    league_table = []
+    tableurl = 'http://basket.co.il/StatsPage_table.asp'
+    r = requests.get(tableurl)
+    sitedata = r.content.decode('cp1255')
+    soup = BeautifulSoup(sitedata, 'html.parser')
+    agg = soup.find_all('table', attrs={'style': 'width:700px;text-align:center;direction:rtl;border:0px;padding:0px;margin:0px;border-collapse:collapse;vertical-align:top;'})
+    htmltable = BeautifulSoup(str(agg[0]), 'html.parser')
+    tablerows = htmltable.find_all('tr')
+    for row in tablerows:
+        splitrow = row.text.split('\n')
+        if splitrow.__len__() == 27:
+            clubtoadd = club(splitrow[2], splitrow[5], splitrow[6])
+            clubtoadd.calculate_ratio()
+            league_table.append(clubtoadd)
+    return league_table

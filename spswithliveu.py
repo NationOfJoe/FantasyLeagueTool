@@ -43,23 +43,11 @@ class club:
         self.wins = wins
 
 
+jj = getPlayervalue.get_league_table()
 teams = []
 secondforward = secondCenter = firstCenter = firstforward = ''
 firstguard = secondguard = thirdguard = thirdforward = ''
-json_key = json.load(open('D:\\\\googleSpreadsheetauth.json'))
-scope = ['https://spreadsheets.google.com/feeds']
-credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
-gc = gspread.authorize(credentials)
-wks = gc.open("fantasyleague")
-worksheet_list = wks.worksheets()
-sh = wks.sheet1
-sh2 = wks.get_worksheet(1)
-teamtablepos = sh2.get_all_values()
-clubs = []
-for aclub in teamtablepos:
-    aclub[3] = aclub[3].rstrip()
-    aclub[3] = aclub[3].lstrip()
-    clubs.append(club(float(aclub[0]), int(aclub[1]), int(aclub[2]), aclub[3]))
+clubs = getPlayervalue.get_league_table()
 players = []
 centers = []
 guards = []
@@ -77,7 +65,7 @@ for inplayer in players:
         centers.append(inplayer)
     if inplayer.pos == 'פורוורד' :
         forwards.append(inplayer)
-for _ in itertools.repeat(None, 15500000):
+for _ in itertools.repeat(None, 15500):
     x = team()
     while firstCenter == secondCenter:
         firstCenter = random.choice(centers)
