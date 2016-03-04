@@ -93,18 +93,32 @@ for _ in itertools.repeat(None, 15500):
     x.members.append(secondforward)
     x.members.append(thirdforward)
     x.calc()
-    secondforward = secondCenter = firstCenter = firstforward = ''
-    firstguard = secondguard = thirdguard = thirdforward = ''
-    if x.totalPrice <= 470 and x.totalratio > 1.6 and x.effeff > 160:
+    secondforward = ''
+    secondCenter = ''
+    firstCenter = ''
+    firstforward = ''
+    firstguard = ''
+    secondguard = ''
+    thirdguard = ''
+    thirdforward = ''
+    if x.totalPrice <= 470 and x.totalratio > 1.3 and x.effeff > 130:
         dup = x.checktwoplayersperteam()
         if dup == 'OK':
             teams.append(x)
 teams.sort(key=lambda y: y.totaleff, reverse=True)
-report = ''
+report = '<p>Suggested Teams:</p>'
+idx = 1
 for someteam in teams:
-    report += r'Team price {0} and total eff {1} \n'.format(someteam.totalPrice, someteam.effeff)
+    team_header = r'Team {2} price {0} and total eff {1}'.format(someteam.totalPrice, someteam.effeff, str(idx))
+    idx = idx + 1
+    report += '<p>'+team_header + '</p><table border="1">'
     for mem in someteam.members:
-        report += mem.name + ', '
-    report += r'\n\n'
-print(report)
+        player_name = mem.name
+        report += '<td>' + player_name + '</td>'
+    report += '</tr></table>'
+report.encode("utf_8")
+filename = 'd:\git\qqq.html'
+f = open(filename, 'w', encoding='utf_8')
+print(report, file=f)
+f.close()
 pass
