@@ -2,11 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import html
 
-class player:
-    def __init__(self, name, peff, leagueteam):
-        self.name = name
-        self.leagueteam = leagueteam
-        self.peff = peff
 
 def createHTMLtablereport(teams):
     report = '<p>Suggested Teams:</p>'
