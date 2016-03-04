@@ -1,9 +1,7 @@
-import json
-import gspread
 import random
 import itertools
-from oauth2client.client import SignedJwtAssertionCredentials
 import getPlayervalue
+import sys
 
 
 class team:
@@ -41,6 +39,15 @@ class club:
         self.ratio = ratio
         self.losses = losses
         self.wins = wins
+
+def safeprint(s):
+    try:
+        print(s)
+    except UnicodeEncodeError:
+        if sys.version_info >= (3,):
+            print(s.encode('cp1255').decode(sys.stdout.encoding))
+        else:
+            print(s.encode('utf8'))
 
 
 jj = getPlayervalue.get_league_table()
@@ -109,16 +116,16 @@ teams.sort(key=lambda y: y.totaleff, reverse=True)
 report = '<p>Suggested Teams:</p>'
 idx = 1
 for someteam in teams:
-    team_header = r'Team {2} price {0} and total eff {1}'.format(someteam.totalPrice, someteam.effeff, str(idx))
+    team_header = r'Team {2} price {0} and total eff {1}'.format(someteam.totalPrice,
+                                                                 str(round(float(someteam.effeff), 2)), str(idx))
     idx = idx + 1
     report += '<p>'+team_header + '</p><table border="1">'
     for mem in someteam.members:
         player_name = mem.name
         report += '<td>' + player_name + '</td>'
     report += '</tr></table>'
-report.encode("utf_8")
 filename = 'd:\git\qqq.html'
 f = open(filename, 'w', encoding='utf_8')
 print(report, file=f)
 f.close()
-pass
+safeprint(report)
