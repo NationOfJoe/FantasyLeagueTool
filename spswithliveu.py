@@ -49,8 +49,10 @@ def safeprint(s):
         else:
             print(s.encode('utf8'))
 
-
-jj = getPlayervalue.get_league_table()
+try:
+    iterations = int(sys.argv[1])
+except:
+    iterations = 2000
 teams = []
 secondforward = ''
 secondCenter = ''
@@ -78,7 +80,7 @@ for inplayer in players:
         centers.append(inplayer)
     if inplayer.pos == 'פורוורד' :
         forwards.append(inplayer)
-for _ in itertools.repeat(None, 15500):
+for _ in itertools.repeat(None, iterations):
     x = team()
     while firstCenter == secondCenter:
         firstCenter = random.choice(centers)
