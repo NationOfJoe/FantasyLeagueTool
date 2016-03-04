@@ -45,8 +45,14 @@ class club:
 
 jj = getPlayervalue.get_league_table()
 teams = []
-secondforward = secondCenter = firstCenter = firstforward = ''
-firstguard = secondguard = thirdguard = thirdforward = ''
+secondforward = ''
+secondCenter = ''
+firstCenter = ''
+firstforward = ''
+firstguard = ''
+secondguard = ''
+thirdguard = ''
+thirdforward = ''
 clubs = getPlayervalue.get_league_table()
 players = []
 centers = []
