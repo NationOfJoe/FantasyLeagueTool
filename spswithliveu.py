@@ -56,14 +56,6 @@ def safeprint(s):
 inp = getPlayervalue.inputs()
 inp.calc_inputs(sys.argv)
 teams = []
-secondforward = ''
-secondCenter = ''
-firstCenter = ''
-firstforward = ''
-firstguard = ''
-secondguard = ''
-thirdguard = ''
-thirdforward = ''
 clubs = getPlayervalue.get_league_table()
 players = []
 centers = []
@@ -84,6 +76,14 @@ for inplayer in players:
         forwards.append(inplayer)
 for _ in itertools.repeat(None, inp.iterations):
     x = team()
+    secondforward = ''
+    secondCenter = ''
+    firstCenter = ''
+    firstforward = ''
+    firstguard = ''
+    secondguard = ''
+    thirdguard = ''
+    thirdforward = ''
     while firstCenter == secondCenter:
         firstCenter = random.choice(centers)
         secondCenter = random.choice(centers)
@@ -104,14 +104,6 @@ for _ in itertools.repeat(None, inp.iterations):
     x.members.append(secondforward)
     x.members.append(thirdforward)
     x.calc()
-    secondforward = ''
-    secondCenter = ''
-    firstCenter = ''
-    firstforward = ''
-    firstguard = ''
-    secondguard = ''
-    thirdguard = ''
-    thirdforward = ''
     if x.totalPrice <= 470 and x.totalratio > inp.mintotratio and x.effeff > inp.effcutoff:
         dup = x.checktwoplayersperteam()
         if dup == 'OK':
