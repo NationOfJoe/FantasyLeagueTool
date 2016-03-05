@@ -23,15 +23,18 @@ class team:
         self.effeff = self.mvp + self.totaleff
 
     def checktwoplayersperteam(self):
+        result = 'OK'
         clubsinteam = []
         for member in self.members:
             clubsinteam.append(member.leagueteam)
         afterfirst = list(set(clubsinteam))
-        aftersecond = list(set(afterfirst))
-        if afterfirst.__len__() == aftersecond.__len__():
-            result = 'OK'
-        else:
-            result = 'dups'
+        for t in afterfirst:
+            i = 0
+            for q in clubsinteam:
+                if t == q:
+                    i = i + 1
+            if i > 2:
+                result = 'dups'
         return result
 
 class club:
@@ -115,8 +118,5 @@ for _ in itertools.repeat(None, inp.iterations):
             teams.append(x)
 teams.sort(key=lambda y: y.totaleff, reverse=True)
 report = gethttpdata.createHTMLtablereport(teams)
-filename = 'd:\git\qqq.html'
-f = open(filename, 'w', encoding='utf_8')
-print(report, file=f)
-f.close()
 safeprint(report)
+pass
