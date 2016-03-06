@@ -57,6 +57,9 @@ inp = getPlayervalue.inputs()
 inp.calc_inputs(sys.argv)
 teams = []
 clubs = getPlayervalue.get_league_table()
+coaches = getPlayervalue.getCoaches()
+for coach in coaches:
+    coach.getratiobyclub(clubs)
 players = []
 centers = []
 guards = []
@@ -103,8 +106,9 @@ for _ in itertools.repeat(None, inp.iterations):
     x.members.append(firstforward)
     x.members.append(secondforward)
     x.members.append(thirdforward)
+    x.members.append(random.choice(coaches))
     x.calc()
-    if x.totalPrice <= 470 and x.totalratio > inp.mintotratio and x.effeff > inp.effcutoff:
+    if x.totalPrice <= 500 and x.totalratio > inp.mintotratio and x.effeff > inp.effcutoff:
         dup = x.checktwoplayersperteam()
         if dup == 'OK':
             teams.append(x)

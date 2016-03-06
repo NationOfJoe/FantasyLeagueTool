@@ -15,7 +15,10 @@ class player:
     def getratiobyclub(self, clubs):
         for someclub in clubs:
             if someclub.name == self.leagueteam:
-                self.teamratio = someclub.ratio * 5
+                if self.pos == 'מאמן':
+                    self.teamratio = someclub.ratio * 10
+                else:
+                    self.teamratio = someclub.ratio * 5
 
 class club():
     def __init__(self, name, wins, losses):
@@ -47,6 +50,25 @@ def fill_player_list():
             ratio = (float(eff)/float(price))
             players.append(player(name, eff, price, pos, ratio, team))
     return players
+
+def getCoaches():
+    coaches = []
+    coachesurl = 'http://basket.co.il/Game/search.asp?name=&crole=4'
+    r = requests.get(coachesurl)
+    sitedata = r.content.decode('cp1255')
+    soup = BeautifulSoup(sitedata, 'html.parser')
+    agg = soup.find_all('tr', attrs={'style': 'border-bottom:Solid 1px #ccc;'})
+    segs = []
+    for row in agg:
+        segs = row.text.split('\n')
+        segs[0] = (segs[3].split('\xa0'))
+        name = segs[0][0].lstrip()
+        name = name.rstrip()
+        pos = segs[2].lstrip()
+        pos = pos.rstrip()
+        coaches.append(player(name, 0, int(segs[1]), pos, 0, segs[0][1]))
+    return coaches
+
 
 def get_league_table():
     league_table = []
